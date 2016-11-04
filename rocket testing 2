@@ -1,0 +1,32 @@
+%Kapilan Satkunanathan
+%Terminal Velocity Lab
+ 
+m=input('mass of object=');
+gamma=input('value of the constant gamma=');
+g=input('value of gravity=');
+v=input('initial velocity=');
+T=input('total time=');
+N=input('Number of divisions=');
+x=input('initial x=');
+dt=T/N;
+t=[0:dt:T];
+n=1;
+ 
+while(n<N)
+    dv=(g-((gamma/m)*v(n)))*dt;
+    dx=v(n)*dt;
+    t(n+1)=t(n)+dt;
+    v(n+1)=v(n)+dv;
+    x(n+1)=x(n)+dx;
+    n=n+1;
+end
+ 
+figure;
+plot(t,v,'r');
+xlabel 'Time (s)';
+ylabel 'Velocity (m/s)';
+title 'Terminal Velocity' ;
+grid on;
+
+figure(2);
+plot(t,x,'g');
