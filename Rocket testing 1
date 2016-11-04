@@ -1,0 +1,15 @@
+ promptM = 'Please enter mass initial ';
+ promptR = 'Please enter burning rate ';
+ promptV = 'Please enter relative velocity ';
+ promptN = 'Please enter number of division: ';
+ M = input(promptM);
+ R = input(promptR);
+ V = input(promptV);
+ N = input(promptN);
+ t=R/M;
+ T=t/N;
+ while M > 1
+     M=M-R*T;
+     T=0:T:t;
+     plot(T,y)
+ end
