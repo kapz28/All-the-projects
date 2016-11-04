@@ -1,0 +1,61 @@
+bool driveCloseTurn180(int power, int dist)
+{
+	SensorType[S4] = sensorSONAR;
+	SensorType[S2] = sensorTouch;
+	bool touchSensorPressed = false;
+	while((SensorValue[S2] == 0) && SensorValue[S4] > (dist + 15))
+	{
+		motor[motorA] = power;
+		motor[motorC] = power;
+	}
+	if(SensorValue[S2] == 1)
+		{
+			touchSensorPressed = true;
+		}
+		else
+		{
+			touchSensorPressed = false;
+			motor[motorA] = 0;
+			motor[motorC] = 0;
+			motor[motorA] = -75;
+			motor[motorC] = 75;
+			wait1Msec(1300);
+		}
+		motor[motorA] = 0;
+		motor[motorC] = 0;
+	if(touchSensorPressed)
+	{
+		return false;//distance was not read by SONAR
+	}
+	else
+	{
+		return true;//distance read by SONAR
+	}
+}
+
+task main()
+{
+    nMotorEncoder[motorA]=0;
+    //get distance from feilan's program using
+    //(distance in cm)*360/2*pi*1.5=counts_A
+    motor[motorA]=75;
+    while(nMotorEncoder[motorA]<counts)
+    {
+    }
+    nMotorEncoder[motorB]=0;
+    //get distance from feilan's program
+    //(distance in cm)*360/2*pi*1.5=counts_B
+    motor[motorB]=75;
+    while(nMotorEncoder[motorB]<counts_B)
+    {
+    }
+    motor[motorB]=0;
+    nMotorEncoder[motorC]=0;
+    //get distance from feilan's program
+    //(distance in cm)*360/2*pi*1.5=counts_B
+    motor[motorC]=75;
+    while(nMotorEncoder[motorC]<counts_C)
+    {
+    }
+    motor[motorC]=0;
+}
