@@ -1,0 +1,77 @@
+/Kapilan Satkunanathan 
+#include <iostream>
+#include <cmath>
+#include <fstream>
+#include <cstdlib>
+#include <math.h>
+#include <stdio.h>
+#include <iomanip>
+
+using namespace std;
+int main()
+{
+int resist_amount,resist,j=0,a,b,maxnum=0,maxresist,tie=1,tieindex,maxindex;
+bool alpha;
+ifstream fin("resist.txt");
+ofstream fout("report.txt");
+int resistor_sort[10]={0};
+while(fin>>resist_amount){
+    for(int i=0;i<resist_amount;i++){
+        fin >> resist;
+        j=0;
+        	for(int index=100;index<=1000;index+=100){
+          			if(resist==index){
+            			resistor_sort[j]+=1;
+          			}
+        		++j;
+        	}
+    }
+}
+for (int index = 0; index < 10; index++){
+		if (resistor_sort[index]>maxnum){
+        maxnum=resistor_sort[index];
+        maxresist=(index*100+100);
+        maxindex=index;
+		}
+	}
+ for (int index = 0; index < 10; index++){
+        if (resistor_sort[index]==maxnum){
+        tie=(index*100+100);
+        tieindex=index;
+		}
+		if( tie== maxresist&&tieindex!=maxindex){
+        alpha=false;
+		}
+		else{
+        alpha=true;
+		}
+ }
+if(alpha==true){
+fout << "the most inventory: "<<maxresist<<" Ohm resistor"<<endl;
+}
+if(alpha==false){
+fout << "there is a tie the most inventories are: "<<maxresist<<" Ohm resistor and "<<tie<<"Ohm resistor"<<endl;
+}
+fout<<"resistance value     needs to order"<<endl;
+j=0;
+a=0;
+for(int index=100;index<=1000;index+=100){
+		if(resistor_sort[j]<275){
+            a=(j*100+100);
+            b= 275-resistor_sort[j];
+            fout<<setw(16)<<a<<setw(19)<<b<<endl;
+          }
+	++j;
+}
+fin.close();
+fout.close();
+}
+/*
+the most inventory: 1000 Ohm resistor
+resistance value     needs to order
+             300                  3
+             400                 39
+             600                  2
+             800                 17
+
+*/
