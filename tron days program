@@ -1,0 +1,85 @@
+/  Kapilan Satkunanathan, Mubashir Ahmed, Ron and Feilan Jiang
+// Tron Days - Bond Programming and Calculus
+
+// References:
+/*
+ [1] T. Benson. (2012, Jun 12). Drag Equation - Level 1 [Online]. Available: https://www.grc.nasa.gov
+ [2] Air Density at Standard Temperature and Pressure [Online]. Available: http://mragheb.com
+*/
+
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+double deg2rad(double d) {
+	return d * M_PI / 180;
+}
+
+double rad2deg(double r) {
+	return r * 180 / M_PI;
+}
+
+int main() {
+	const double g = 9.81;
+	const double m = 80;	// mass assumed to be 80 kg (Bond + his parachute)
+	const double d = 1.395;	// STP assumed, so air density is 1.395 kg / m^3 [2]
+	const double c_d = 1.2;
+	const double area = 20;
+	
+	cout << "NOTE: right and down are the positive directions, so enter values accordingly" << endl;
+	
+	double v_0, h, launch_angle, delta_t, t_chute;
+	
+	// all input assumed to be numerical
+	cout << "Enter launch speed in m/s: "; cin >> v_0;
+	cout << "Enter launch height above the ground in m: "; cin >> h;
+	cout << "Enter launch angle in degrees, upward from the horizontal: "; cin >> launch_angle;
+	cout << "Enter time interval for calculations, in s: "; cin >> delta_t;		// assumed to be less than the time it would take to reach the ground without a parachute
+	cout << "Enter time at which parachute is opened, in s: "; cin >> t_chute;	// assumed to be less than the time it would take to reach the ground without a parachute
+	
+	// output velocity and position at each time interval
+	double v_x0 = v_0 * cos(deg2rad(launch_angle));
+	double v_y0 = v_0 * sin(deg2rad(-launch_angle));
+	double v_y1 = v_y0;	// velocity at time from previous loop iteration
+	double v_y2 = v_y0;	// velocity at current time
+	double v = 0;
+	double d_x = 0;	// position values are relative to the launch point
+	double d_y = 0;
+	double angle = 0;
+	double accel_y = 0;
+	string v_y_direction;
+	bool is_parachute_open = false;
+	for (double t = delta_t; abs(d_y) <= h; t += delta_t) {
+		is_parachute_open = t >= t_chute;
+		
+		// x-direction position and velocity
+		d_x += delta_t * v_x0;
+
+		// y-direction position and velocity
+		if (is_parachute_open) {	// parachute assumed not to interfere with horizontal motion
+			accel_y = g - ((v_y1 > 0) ? 1 : -1) * (d * pow(v_y1, 2) * c_d * area) / (2 * m);	// derived from drag equation [2]
+		} else {
+			accel_y = g;
+		}
+		v_y2 += accel_y * delta_t;
+		d_y += v_y2 * delta_t;
+		
+		v_y_direction = (v_y2 > 0) ? "down" : "up";
+		
+		v = sqrt(pow(v_x0, 2) + pow(v_y2, 2));
+		angle = atan(v_y2 / v_x0);
+		
+		cout << endl 
+		     << "At t = " << t << " s (parachute" << (is_parachute_open ? " " : " not ") << "open):" << endl
+		     << "Position (x, y) in m, relative to the launch point: (" << d_x << ", " << -d_y << ")" << endl
+		     << "Velocity components (x and y): " << abs(v_x0) << " m/s [right], " << abs(v_y2) << " m/s [" << v_y_direction << ']' << endl
+		     << "Velocity in m/s: " << abs(v) << " m/s [" << rad2deg(abs(angle)) << " degrees " << v_y_direction << ']' << endl;
+		cout << "y accel: " << accel_y << endl;
+		     
+		accel_y = (v_y2 - v_y1) / delta_t;
+		v_y1 = v_y2;
+	}
+	
+	return 0;
+}
