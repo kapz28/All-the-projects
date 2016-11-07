@@ -60,9 +60,8 @@
 				  </tr>
 				  <tr>
 				    <th>Period</th>
-					<th>Sun Room</th>
-					<th>Reed Room</th>
-					<th>Treehouse</th>
+				    <th>Sun Room</th>
+				    <th>Reed Room</th>
 				  </tr>
 				</thead>
 				<tbody>
@@ -108,7 +107,7 @@
 				 </div>
                  <div class= "row">
 				   <div class= "category">Phone</div>
-				   <div>218) 555-5253</div>
+				   <div>(218) 555-5253</div>
 				 </div>
 				 <div class= "row">
                    <div class= "category">Fax</div>
