@@ -1,0 +1,224 @@
+﻿/* 
+   Author: Kapilan Satkunanathan  
+   Date: 5/10/2016    
+   
+ */
+
+/* reset styles */
+html {
+   font-size: 16px;
+}
+a, article, body, div, dd, dl, dt, figcaption, figure, footer, header, h1, 
+h2, h3, img, li, nav, ol, p, section, table, tbody, td, tfoot, th, thead, tr, ul {
+   border: 0;
+   padding: 0;
+   margin: 0;
+}
+img {
+   max-width: 100%;
+   height: auto;
+   width: auto;
+}
+ol, ul{
+	list-style-type: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+/* document-wide styles */
+body {
+   margin: 0 auto;
+   font-family: Arial, Helvetica, sans-serif;
+}
+p {
+   line-height: 1.4em;
+   font-size: 1.3em;
+}
+a:link {
+   color: black;
+}
+a:visited {
+   color: #888;
+}
+
+/* skip navigation link */
+p.skipnavigation a {
+   position: absolute;
+   left: -10000px;
+}
+p.skipnavigation a:focus {
+   color: ivory;
+   background-color: #34180f;
+   top: 0.4em;
+   left: auto;
+   right: 0.4em;
+   z-index: 2;
+}
+
+/* header section */
+h1 {
+   text-align: center;
+   font-family: Bitter, "Times New Roman", Times, serif;
+   font-weight: 700;
+   color: ivory;
+   background-color: white;
+   font-size: 2.4em;
+}
+
+/* site navigation bar */
+nav.sitenavigation {
+   color: #34180f;
+   text-align: center;
+   background-color: #B8944D;
+}
+nav.sitenavigation li{
+	margin: 0.3em 0.5em;
+	display: inline-block;
+	font-size: 1.3em;
+	line-height: 1.4em;
+}
+nav.sitenavigation a:link {
+   text-decoration: none;
+   color: #34180f;
+}
+nav.sitenavigation a:visited {
+   color: #744f42;
+}
+nav.sitenavigation a:hover, nav.sitenavigation a:focus {
+   color: ivory;
+}
+
+/* main content */
+article ol{
+	margin: 1em 0 1em 2em;
+	font-size: 1.3em;
+	list-style-type: decimal;
+}
+article ul{
+	margin: 1em 0 1em 2em;
+	font-size: 1.3em;
+	list-style-type: disc;
+}
+article dl{
+	margin: 1em 0;
+	font-size: 1.3em;
+	list-style-type: disc;
+}
+article dd{
+	font-weight: bold;
+}
+article dt{
+	margin-left:2em;
+
+}
+article {
+   margin: 0 auto;
+   padding: 1.4em;
+   background: #7eccec;
+   background: url("images/water.jpg");
+}
+article div {
+   max-width: 800px;
+   margin: 0 auto;
+   padding: 0 3% 1em;
+   background-color: ivory;
+   overflow: auto;
+}
+h2 {
+   padding: 0.4em 0.4em 0;
+   text-align: center;
+   font-family: Bitter, "Times New Roman", Times, serif;
+   font-size: 2em;
+   font-weight: 700;
+}
+h3 {
+   margin: 1.4em 0 0.5em;
+   font-size: 1.6em;
+   font-family: Bitter, "Times New Roman", Times, serif;
+   font-weight: 700;
+   clear: both;
+}
+.contact span {
+   font-weight: bold;
+}
+
+/* figures */
+figure {
+   max-width: 50%;
+   margin: 0 0 2% 2%;
+   padding: 2%;
+   border: 1px solid #ccc;
+   float: right;
+   background-color: white;
+   box-shadow: 0 10px 6px -6px #777;
+}
+figure img {
+   display: block;
+}
+/*main content lists*/
+article ol{
+	margin: 1em 0 1em 2em;
+	font-size: 1.3em;
+	list-style-type: decimal;
+}
+/* main content tables*/
+td, th {
+	border: 1px solid black;
+	padding: 0.4em;
+	font-size: 1.3em;
+	text-align: center;
+}
+table{
+	width: 100%;
+	border: 2px solid black;
+}
+th{
+	background-color: #aecdf4;
+}
+.table-heading-column{
+	background-color: #fleace;
+}
+.table-data-columns {
+	background-color: white;
+}
+/* main content CSS tables*/
+.contact {
+	margin: 1em 0;
+	display: table;
+	font-size: 1.3em;
+}
+.row{
+	display: table-row;
+}
+.row div{
+	display: table-cell;
+	padding: 0.25em 0.5em;
+}
+.catergory{
+	font-weight:bold;
+}
+/* footer section */
+footer {
+   padding: 0.6em;
+   background-color: #34180f;
+   color: ivory;
+   text-align: center;
+}
+
+/* print styles */
+@media print {
+   body, h1, article, footer {
+      color: rgb(0,0,0);
+      background: rgb(255,255,255);
+   }
+   body {
+      max-width: 100%;
+   }
+   nav {
+      display: none;
+   }
+}
+@page {
+   margin: 0.75in;
+}
