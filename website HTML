@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <title>Lakeland Reeds Bed &amp; Breakfast - Reservations</title>
+      <!-- 
+         Author:Kapilan Satkunanathan   
+         Date:  5/10/2016    
+      -->
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width">
+      <script src="modernizr.custom.40753.js"></script>
+      <link href='http://fonts.googleapis.com/css?family=Bitter:400,700' rel='stylesheet' type='text/css'>
+      <link rel="stylesheet" href="lakeland.css">
+      <link rel="shortcut icon" href="images/favicon.ico">
+      <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+      <link rel="icon" sizes="192x192" href="images/android.png">
+   </head>
+   <body>
+      <p class="skipnavigation"><a href="#contentstart">Skip navigation</a></p> 
+      <header>
+         <h1><a href="index.html"><img src="images/lakeland.gif" width="659" height="165" alt="Lakeland Reeds Bed and Breakfast"></a></h1>
+      </header>
+      <nav class="sitenavigation">
+		<ul>
+         <li><a href="index.html">Home</a></li>
+         <li><a href="aboutus.html">About Us</a></li>
+         <li><a href="reserve.html">Reservations</a></li>
+         <li><a href="events.html">Events</a></li>
+         <li><a href="http://wxug.us/1hn14">Weather</a></li>
+         <li><a href="https://goo.gl/maps/bwf5R">Directions</a></li>
+		</ul>
+      </nav>
+      <article>
+         <div>
+            <h2 id="contentstart">Reservations</h2>
+            <p>We're happy to take reservations up to a year in advance by email, phone, or fax.</p>
+            <section>
+               <h3>Availability</h3>
+               <figure>
+                  <img src="images/shore.jpg" width="350" height="233" alt="a rowboat at a wooden dock, with lily pads in the water and grasses growing on the shore">
+               </figure>
+               <p>Holiday weekends tend to book far in advance, so we recommend reserving as far in the future as possible to ensure we can host you on the days you want.</p>
+               <p>Our most sought-after weekends:</p>
+			   <ol>
+							<li>Independence Day (Jul.4)</li>
+							<li>Labor Day (first Monday in Sep.)</li>
+			   </ol>
+            </section>
+            <section>
+               <h3>Rates</h3>
+			   <table>
+				<colgroup>
+					<col class="table-heading column">
+					<col class="table-data-columns" span="3">
+				</colgroup>
+			    <thead>
+				  <tr>
+					<th rowspan="2">Period</th>
+					<th colspan="3">Room</th>
+				  </tr>
+				  <tr>
+				    <th>Period</th>
+					<th>Sun Room</th>
+					<th>Reed Room</th>
+					<th>Treehouse</th>
+				  </tr>
+				</thead>
+				<tbody>
+				  <tr>
+				    <td>May 1-Sep.15</td>
+					<td>$110</td>
+					<td>$120</td>
+					<td>$150</td>
+				  </tr>
+				  <tr>
+				    <td>Sep.16-Apr.30</td>
+					<td>$100</td>
+					<td>$110</td>
+					<td>$150</td>
+				  </tr>
+				</tbody>
+			   </table>
+            </section>
+            <section>
+               <h3>Special Events</h3>
+               <figure>
+                  <img src="images/frolic.jpg" width="350" height="209" alt="people swimming with a raft in the lake">
+               </figure>
+               <p>Lakeland Reeds is also available for booking group special events, including</p>
+			   <ul>
+							<li>Weddings</li>
+							<li>Birthdays</li>
+							<li>Family reunion</li>
+			   </ul>
+               <p><a href="weddings.pdf">Guidelines and reservation form for a special event at Lakeland Reeds.</a> (PDF)</p>
+            </section>
+            <section>
+               <h3>Questions?</h3>
+               <p>Feel free to contact us with any queries about Lakeland Reeds, or about planning your trip.</p>
+               <div class= "contact"> 
+				 <div class= "row"> 
+                   <div class= "category">Proprietor</div>
+				   <div>Phillip Blaine</div>
+				 </div>
+				 <div class= "row"> 
+                   <div class= "category">Email</div> 
+				   <div>lrbb@example.com</div>
+				 </div>
+                 <div class= "row">
+				   <div class= "category">Phone</div>
+				   <div>218) 555-5253</div>
+				 </div>
+				 <div class= "row">
+                   <div class= "category">Fax</div>
+				   <div>(218) 555-0413</div>
+                </div>
+			   </div>
+            </section>
+         </div>
+      </article>
+      <footer>
+         <p>45 Marsh Grass Ln. &bull; Marble, MN 55764 &bull; (218) 555-5253</p>
+      </footer>
+	  <p>Kapilan Satkunanathan HTML5 Unit H</p>
+   </body>
+</html>
