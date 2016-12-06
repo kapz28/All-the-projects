@@ -1,0 +1,740 @@
+//Source Code
+//Information for the array that stores the final move values over the course of the
+//maze that will later be optimized
+const int MOVEINDEX = 50;
+
+
+//Average value between a black and white line
+const int OFFSET = 430;
+
+
+//Reverses array for way back - Written by Kapilan Satkunanathan
+void Reverse_Array(char* array,int& size)
+{
+	char temp;
+	for(int i=0;size>i;i++)
+	{
+		temp=array[i];
+		array[i]=array[size];
+		array[size]=temp;
+		size--;
+	}
+} //end of Reverse_Array
+
+
+//Flips turns ie from R to L, L to R - Written by Kapilan Satkunanathan
+void Reverse_Turns(char* ary,int sze)
+{
+	for(int i=0;sze>i;i++)
+	{
+		if(ary[i]=='R')
+			ary[i]='L';
+
+
+		else if(ary[i]=='L')
+			ary[i]='R';
+	}
+}//end of Reverse_Turns
+
+
+//Function to drive straight -
+void forwards(int powerlevelA, int powerlevelC)
+{
+	//Negatives account for backwards motors
+	motor[motorA] = -powerlevelA;
+	motor[motorC] = -powerlevelC;
+}//end of forwards
+
+
+//performs a u turn 
+void uTurn()
+{
+	nMotorEncoder[motorA] = 0;
+	nMotorEncoder[motorC] = 0;
+	motor[motorC] =  -20;
+	motor[motorA] = 15;
+	while (nMotorEncoder[motorC] > -520 && nMotorEncoder[motorA] > -520)
+	{}
+	motor[motorC] = 0;
+	motor[motorA] = 0;
+}//end of uTurn
+
+
+//turns right and drives forward a little 
+void turn90Right(bool right)
+{
+	nMotorEncoder[motorA] = 0;
+	nMotorEncoder[motorC]=0;
+
+
+	if (right)
+	{
+		motor[motorC] =  -29;
+		motor[motorA] = 6;
+		while (nMotorEncoder[motorC] > -380 && nMotorEncoder[motorA] > -380)
+		{}
+	}
+
+
+	//turn left
+	else
+	{
+		motor[motorA] =  -25;
+		motor[motorC] = 11;
+		while (nMotorEncoder[motorC] > -325 && nMotorEncoder[motorA] > -325)
+		{}
+	}
+
+
+	motor[motorC] = 0;
+	motor[motorA] = 0;
+
+
+}// end of turn90Right
+
+
+//This function will update the motors depending on whether or not the robot is able
+//to detect the black line
+void followLine()
+{
+	//if not Black
+	if(SensorValue[S2] != 1)
+		forwards(25,5);
+	//if Black
+	else if(SensorValue[S2] == 1)
+		forwards(5,25);
+
+
+
+
+} //End of followLine function
+
+
+//Check for straight paths once a junction is reached - Written by Tarnpreet Bhatti
+void CheckStraight(int & LeftSensor,int & MiddleSensor,int & RightSensor)
+{
+// Turn the robot slightly left or right depending on which sensor saw the 
+// line and then take second readings
+	if(LeftSensor < OFFSET)
+		forwards(10,5);
+	else
+		forwards(5,10);
+
+
+	wait1Msec(200);
+	forwards(0,0);
+
+
+	LeftSensor = SensorRaw[S1];
+	RightSensor = SensorRaw[S3];
+
+
+	//Drive a little forwards and wiggle left and right
+	forwards(10,10);
+	wait1Msec(750);
+	MiddleSensor = SensorValue[S2];
+	forwards(10,-10);
+	time1[T1] = 0;
+
+
+	while(time1[T1] < 750)
+	{
+		if(MiddleSensor != BLACKCOLOR)
+			MiddleSensor = SensorValue[S2];
+	}
+//Drive a little forwards and wiggle left and right
+	forwards(-10,10);
+	wait1Msec(750);
+	forwards(-10,-10);
+	wait1Msec(770);
+	forwards(0,0);
+}//end of CheckStraight
+
+
+//This function will check for junctions within the maze but also will check for
+//u-turns
+void checkJunction(char* movesList, int & currentMoveIndex)
+{
+	//Read in the current sensor values
+	int LeftSensor = SensorRaw[S1];
+	int MiddleSensor = SensorValue[S2];
+	int RightSensor = SensorRaw[S3];
+
+
+	//First check if the left or the right sensor see a black line
+	if(LeftSensor < OFFSET || RightSensor < OFFSET)
+	{
+		CheckStraight(LeftSensor,MiddleSensor,RightSensor);
+
+
+		//If both sensors saw a black line
+		if(LeftSensor < OFFSET && RightSensor < OFFSET)
+		{
+			//Record a Right turn and turn right
+			movesList[currentMoveIndex] = 'R';
+			currentMoveIndex ++;
+			turn90Right(true);
+		}
+		else
+		{
+			//The right sensor saw a line
+			if(RightSensor < OFFSET)
+			{
+				//Case 1 - there is straight - Record a right,
+//otherwise don't
+				if(MiddleSensor == 1)
+				{
+					movesList[currentMoveIndex] = 'R';
+					currentMoveIndex ++;
+				}
+				turn90Right(true);
+			}
+			//if the right sensor didn't see a black line,
+//then the left one must have
+			else if(LeftSensor < OFFSET)
+			{
+				//If there is no straight then turn left 
+//and record nothing
+				if(MiddleSensor != 1)
+				{
+					turn90Right(false);
+				}
+				//there is a straight, record a straight and continue
+				else
+				{
+					movesList[currentMoveIndex] = 'S';
+					currentMoveIndex ++;
+					forwards(30,30);
+					wait1Msec(300);
+					forwards(0,0);
+				}
+			}
+		}//end of if only one Sensors detected the line
+	}//end of if the left or right sensor see a black line
+}//end of check junction
+
+
+//This function will check for U turns 
+void checkUturn(int & counter)
+{
+
+
+	/*A u turn occurs when all the sensors see white but since the sensors will see white for brief moments while line following a u turn will only occur after 
+	the sensors see white for a long continuous period of time
+	*/
+
+
+	//Read in the current sensor values
+	int LeftSensor = SensorRaw[S1];
+	int MiddleSensor = SensorValue[S2];
+	int RightSensor = SensorRaw[S3];
+
+
+	//All sensors see white (ie not black)
+	if(LeftSensor > OFFSET && MiddleSensor != 1 && RightSensor > OFFSET)
+		counter ++;
+	else
+		counter = 0;
+}
+
+
+//Checks if the U-turn should be performed and performs it if necessary
+void MakeUturn(char* movesList, int & currentMoveIndex)
+{
+	//wiggles to check if there is a line to follow
+	int MiddleSensor = SensorValue[S2];
+	forwards(10,-10);
+	time1[T1] = 0;
+
+
+	while(time1[T1] < 750)
+	{
+		if(MiddleSensor != BLACKCOLOR)
+			MiddleSensor = SensorValue[S2];
+	}
+
+
+	forwards(-10,10);
+	wait1Msec(750);
+	forwards(-5,-5);
+	wait1Msec(300);
+
+
+	//If the line isn't there, an u turn is in order
+	if(MiddleSensor != BLACKCOLOR)
+	{
+		movesList[currentMoveIndex] = 'U';
+		currentMoveIndex ++;
+		uTurn();
+	}
+}
+
+
+
+
+
+
+//reads the array and performs the turns to follow the optimized path back to start
+void performTurns(char* turns, int & pointer) {
+
+
+	// If the right sensor or left sensor senses black
+	if (SensorRaw[S1] < OFFSET || SensorRaw[S2] < OFFSET) 
+{
+
+
+		int leftSensor = SensorRaw[S1];
+		int middleSensor = SensorValue[S2];
+		int rightSensor = SensorRaw[S3];
+
+
+		// Ignore it if it's a zero
+		while (turns[pointer] == '0') 
+{
+			++pointer;
+		}
+		if (turns[pointer] == 'L')
+		{
+// If it's possible to make a left turn
+			if (leftSensor < OFFSET) 
+{
+// If the right sensor also detects black, you can 
+// make the turn immediately
+				if (rightSensor < OFFSET) 
+{
+					turn90Right(false);
+					++pointer;
+				}
+// If the right sensor doesn't also sense black,
+// then you need to check for a straight
+				else 
+{
+					CheckStraight(leftSensor, middleSensor,
+rightSensor);
+					//If there is a straight
+					if (middleSensor == 1) 
+{
+						turn90Right(false);
+						++pointer;
+					}
+
+
+// If it's possible to make a left turn, there's no
+// right, and there's no straight
+					else if (middleSensor == 6)
+{
+turn90Right(false);
+					}
+				}
+			}
+		} // End of Left
+
+
+		else if (turns[pointer] == 'R')
+{
+// if it's possible to make a right turn
+			if (rightSensor < OFFSET)
+{
+// If the left sensor also detects black, you can
+// immediately turn right
+				if (leftSensor < OFFSET) 
+{
+					turn90Right(true);
+					pointer++;
+				}
+
+
+				// If the left sensor doesn't also sense black, you 
+// need to check for a straight
+				else 
+{
+					CheckStraight(leftSensor, middleSensor,
+rightSensor);
+					//If there is a straight
+					if (middleSensor == 1) 
+{
+						turn90Right(true);
+						pointer++;
+					}
+					//If there isn't a straight
+					else if (middleSensor == 6) 
+{
+						turn90Right(true);
+					}
+				}
+			} // End of right
+			else
+				if (turns[pointer] == 'S') 
+{
+				CheckStraight(leftSensor, middleSensor, rightSensor);
+				wait1Msec(100);
+
+
+				//If there is a straight
+				if(middleSensor == 1) 
+{
+					motor[motorA] = -10;
+					motor[motorC] = -10;
+					wait1Msec(500);
+					motor[motorA] = 0;
+					motor[motorC] = 0;
+					++pointer;
+				}
+			}
+			else 
+{
+				if (SensorRaw[S1] < OFFSET && SensorRaw[S3] > OFFSET) 
+{
+					turn90Right(true);
+				}
+				else if (SensorRaw[S1] > OFFSET && SensorRaw[S3] < OFFSET) 
+{
+					turn90Right(false);
+				}
+			}
+
+
+		} // End of straight
+
+
+	} // End of the right or left sensor detect black
+
+
+} //End of perform turns
+
+
+
+
+//Checks if array has 'U' - Written by Qi Fan Guo
+bool hasUturns(char* movesList)
+{
+for (int i = 0; i< MOVEINDEX; i++)
+	if (movesList[i] == 'U')
+	return true;
+return false;
+}//end of hasUturns
+
+
+//finds array location to the left, skipping 0s - Written by Qi Fan Guo
+int leftSide(int i,char* movesList)
+{
+i--;
+while (movesList[i] == '0')
+	i--;
+return i;
+}//end of leftSide
+
+
+//finds array location to the right, skipping 0s - Written by Qi Fan Guo
+int rightSide(int i, char* movesList)
+{
+i++;
+while (movesList[i] == '0')
+	i++;
+return i;
+}//end of rightSide
+
+
+//Optimize the recorded array of turns - Written by Qi Fan Guo and Tarnpreet Bhatti
+void optimizeMaze(char* movesList, int & currentMoveIndex)
+{
+do{
+	for (int i = 0; i< currentMoveIndex; i++)
+	{
+		if (movesList[i] == 'U')
+		{
+			if (movesList[leftSide(i,movesList)] == 'R' && 
+movesList[rightSide(i,movesList)] == 'S')
+			{
+				movesList[leftSide(i,movesList)] = '0';
+				movesList[rightSide(i,movesList)] = '0';
+				movesList[i] = 'L';
+			}
+			else if (movesList[leftSide(i,movesList)] == 'L' && 
+movesList[rightSide(i,movesList)] == 'R')
+			{
+				movesList[leftSide(i,movesList)] = '0';
+				movesList[rightSide(i,movesList)] = '0';
+				movesList[i] = 'U';
+			}
+			else if (movesList[leftSide(i, movesList)] == 'R' && 
+movesList[rightSide(i, movesList)] == 'R')
+			{
+				movesList[leftSide(i,movesList)] = '0';
+				movesList[rightSide(i,movesList)] = '0';
+				movesList[i] = 'S';
+			}
+			else if (movesList[leftSide(i, movesList)] == 'R' && 
+movesList[rightSide(i, movesList)] == 'L')
+			{
+				movesList[leftSide(i,movesList)] = '0';
+				movesList[rightSide(i,movesList)] = '0';
+				movesList[i] = 'U';
+			}
+			else if (movesList[leftSide(i,movesList)] == 'S' && 
+movesList[rightSide(i,movesList)] == 'S')
+			{
+				movesList[leftSide(i,movesList)] = '0';
+				movesList[rightSide(i,movesList)] = '0';
+				movesList[i] = 'U';
+			}
+			else if (movesList[leftSide(i,movesList)] == 'R' && 
+movesList[rightSide(i,movesList)] == 'S')
+			{
+				movesList[leftSide(i,movesList)] = '0';
+				movesList[rightSide(i,movesList)] = '0';
+				movesList[i] = 'R';
+			}
+		}
+	}
+}while (hasUturns(movesList));
+}//End of Optimize
+
+
+
+
+
+
+//pick up and drop off object function with the use of the claw
+void claw(bool dropoff)
+{
+//drives forwards, releases object, drives backwards, performs uturn
+if (dropoff)
+{
+	forwards(10,10);
+	wait1Msec(3000);
+	forwards(0,0);
+	motor[motorB]=-100;
+	nMotorEncoder[motorB]=0;
+	while(nMotorEncoder[motorB]>-110){
+	}
+	motor[motorB]=0;
+	forwards(-10,-10);
+	wait1Msec(3000);
+	forwards(0,0);
+	wait1Msec(1000);
+	uTurn();
+}
+//drives forwards until object is picked up, performs uturn, drives back to black line maze
+else
+{
+	if (SensorValue[S4] == 0)
+	{
+		time1[T3] = 0;
+		forwards(10,10);
+	}
+	while (SensorValue[S4] == 0)
+	{}
+	int timeTaken = time1[T3];
+	forwards(0,0);
+	nMotorEncoder[motorB]=0;
+	motor[motorB]=100;
+	while(nMotorEncoder[motorB]<110){
+	}
+	motor[motorB]=0;
+	wait1Msec(500);
+	uTurn();
+	time1[T3]=0;
+	forwards(10, 10);
+	while (time1[T3] < timeTaken)
+	{}
+	forwards(0,0);
+	wait1Msec(1000);
+}
+}//end of claw
+
+
+
+
+
+
+
+
+// Main program - Written in parts by Tarnpreet Bhatti, Qi Fan Guo, James Kattukudiyil and Kapilan Satkunanathan
+task main()
+{
+//Initalize sensors
+SensorType[S1] = sensorLightActive;//Left Sensor
+SensorType[S2] = sensorColorNxtFULL;//Forwards Sensor/Line follower sensor
+SensorType[S3] = sensorLightActive;//Right Sensor
+SensorType[S4] = sensorTouch;
+
+
+//Information for the array that stores the final move values over the course of the maze that will later be optimized
+int currentMoveIndex = 0;
+char movesList[MOVEINDEX];
+
+
+//whether to pickup an object at the end, or to bring an object to the end
+bool dropoff;
+displayString(0,"Do What?");
+displayString(4,"dropoff   pickup");
+while(nNxtButtonPressed == -1)
+{}
+if (nNxtButtonPressed == 1){
+	dropoff = false;
+}
+if (nNxtButtonPressed == 2){
+	dropoff = true;
+}
+
+
+eraseDisplay();
+//fill the turns array with zeros
+for(int i = 0; i < MOVEINDEX; i++)
+	movesList[i] = '0';
+
+
+//start timers
+time1[T1] = 0;
+time1[T2] = 0;
+string array_output[30];
+
+
+//count number of times a possible uturn shows up
+int whiteCounter = 0;
+
+
+//Keep looping until blue or green is seen - going to end of maze or back to start
+while(SensorValue[S2] != BLUECOLOR && SensorValue[S2] != GREENCOLOR)
+{
+
+
+	followLine();
+
+
+	if(time1[T2] > 200)
+	{
+		checkUturn(whiteCounter);
+		time1[T2] = 0;
+	}
+
+
+
+
+	if(whiteCounter > 3)
+	{
+		MakeUturn(movesList,currentMoveIndex);
+		whiteCounter = 0;
+	}
+
+
+	checkJunction(movesList,currentMoveIndex);
+
+
+	for(int i = 0; i < 15;i++)
+		array_output[i] = movesList[i];
+
+
+	displayString(0,"M = %s %s",array_output[0],array_output[8]);
+	displayString(1,"M = %s %s",array_output[1],array_output[9]);
+	displayString(2,"M = %s %s",array_output[2],array_output[10]);
+	displayString(3,"M = %s %s",array_output[3],array_output[11]);
+	displayString(4,"M = %s %s",array_output[4],array_output[12]);
+	displayString(5,"M = %s %s",array_output[5],array_output[13]);
+	displayString(6,"M = %s %s",array_output[6],array_output[14]);
+	displayString(7,"M = %s %s",array_output[7],array_output[15]);
+
+
+}
+forwards(0,0);
+
+
+//no end to the maze
+if (SensorValue[S2] == GREENCOLOR)
+{
+	eraseDisplay();
+	displayString(0, "error, end not found");
+}
+
+
+//end found
+else
+{
+	claw(dropoff);
+
+
+	//If the right button is pressed then optimize the maze when coming back otherwise take a random path backwards
+	while(nNxtButtonPressed == -1){};
+	if(nNxtButtonPressed == 3)
+	{
+		while (nNxtButtonPressed == 3)
+			//optimization on the array
+		optimizeMaze(movesList,currentMoveIndex);
+		Reverse_Turns(movesList,currentMoveIndex);
+		Reverse_Array(movesList,currentMoveIndex);
+
+
+		eraseDisplay();
+		displayString(0,"Button Worked");
+
+
+		//Press button again to see first 7 of optimized array
+		while(nNxtButtonPressed != 3){}
+		while(nNxtButtonPressed == 3){}
+
+
+		for(int i = 0; i < 7;i++)
+			array_output[i] = movesList[i];
+
+
+		displayString(0,"M = %s %s",array_output[0]);
+		displayString(1,"M = %s %s",array_output[1]);
+		displayString(2,"M = %s %s",array_output[2]);
+		displayString(3,"M = %s %s",array_output[3]);
+		displayString(4,"M = %s %s",array_output[4]);
+		displayString(5,"M = %s %s",array_output[5]);
+		displayString(6,"M = %s %s",array_output[6]);
+		displayString(7,"M = %s %s",array_output[7]);
+		displayString(8,"optimizedMaze");
+
+
+		int pointer = 0;
+		while (SensorValue[S2] != GREENCOLOR)
+		{
+			followLine();
+			movesList[49] = 'S'
+			performTurns(movesList, pointer);
+		}
+	}
+
+
+	else
+	{
+		eraseDisplay();
+		displayString(0, "not optimized");
+
+
+		//unoptimized path back to start
+		while(SensorValue[S2] != GREENCOLOR)
+		{
+			
+			followLine();
+
+
+			
+			if(time1[T2] > 200)
+			{
+				checkUturn(whiteCounter);
+				time1[T2] = 0;
+			}
+
+
+			
+			if(whiteCounter > 3)
+			{
+				MakeUturn(movesList,currentMoveIndex);
+				whiteCounter = 0;
+			}
+
+
+			checkJunction(movesList,currentMoveIndex);
+		}
+		forwards(0,0);
+	}
+}
+}//End of main
+
+
+
+
