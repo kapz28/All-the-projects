@@ -1,0 +1,31 @@
+# note the first script launches a script which launches a few other scripts in sucession
+#!/bin/bash
+
+# Environnement de pcpnBassin
+#. /users/dor/armn/nl4/apps/prBassin/cfg/.prBassin
+. /users/dor/afsg/kas/diskspace/test_milena/cfg/.prBassin
+
+repbin=$PRBASSIN_HOME/bin
+
+dateheuredeb=2016060100
+dateheurefin=2016060312
+
+dateheure=${dateheuredeb}
+
+pas=12
+#echo "Launching the 2dsort script"
+#python  twod_csv.py  $dateheuredeb $dateheurefin $PRBASSIN_FIC_LST_ID_SHAPEFILES $PRBASSIN_REP_SORTIE $pas
+while [ $dateheure -le $dateheurefin ]
+do
+  ./prBassin.py $dateheure
+
+  dateheure=`r.date $dateheure +$pas | cut -c1-10`
+  print "apple"
+  print $dateheure
+  print "banana"
+done
+echo ""
+echo ""
+echo "Launching the 2dsort script"
+python  twod_csv.py  $dateheuredeb $dateheurefin $PRBASSIN_FIC_LST_ID_SHAPEFILES $PRBASSIN_REP_SORTIE $pas
+echo "end of 2d script"
