@@ -1,0 +1,146 @@
+#!/usr/bin/python
+# GEPSEnsMean12hAcc.py
+
+# Written by Kapilan Satkunanathan and Dorothy Dunford, September 2017
+# based on code by Dorothy Dunford: PlotWatersheds.py
+# and Benoit Lapointe: strfw_compare_daily_statsonly.py
+
+# Updated by Dorothy Durnford, June, 2016
+
+#####
+
+# This program is one the last script in a bunch of scripts to organize the output file data into a csv file as desired
+# e.g., when considering 2015110500, the simulated fields considered are:
+# forecasts: 2015110500_GrLksStLR, 2015110500_GrLksStLR, 2015110500_GrLksStLR, 2015110500_GrLksStLR
+#####
+
+# The function is called with the following arguments:
+# Compulsory arguments:
+# arg1: the start date of the analysis period in the following format yyyymmdd
+# arg2: the end date of the analysis period in the following format yyyymmdd
+# arg3: path of directory to receive generated files the output files: e.g. /cnfs/dev/cmd/cmde/afsgdod/Maestro/watroute/input/GrLksStLR/constant/geophys/
+# arg4: path where GEPS standard files are kept, e.g. GrLksStLR
+
+# To run this script from the command line, open the run_nameofscript.py  using vim:
+# insert desired parameters
+# make parent script(run_nameofscript.py) executable using chmod u+x 
+# to adjust more specific parameters look at the beginning of the script and make adjustments to intial variables if necessary
+
+#####
+
+# Notes:
+
+
+######################################################################
+
+import csv                                                           # Import modules
+import datetime
+import os
+import string
+import sys
+import numpy
+import shutil
+import rpnpy.librmn.all as rmn                                       # For Python RPN v2.0
+
+
+class twodarraysorter:
+    def sort(self,datestr_str, dateend_str, station_list, dir_out, step):
+    
+        #Intializing some variables
+        datestart = datetime.datetime.strptime(datestr_str, "%Y%m%d%H")# start date
+        datecurr = datetime.datetime.strptime(datestr_str, "%Y%m%d%H") # current date
+        dateend = datetime.datetime.strptime(dateend_str, "%Y%m%d%H")  # end date
+        numdates = (((dateend - datestart).days) + 1)*2                # The number of dates to be processed: Nsyntimes synoptic times per day, including on date_start and date_end
+        csv_out_name = "master_twod.csv"			       # name of output file
+	csv_out_path = os.path.join(dir_out,csv_out_name)              # path of csv file to write to
+	step = int(step)                                               # increment of dates
+	print csv_out_path												
+	lst_id_shpfiles = [l.strip().split()[1] for l in open(station_list, 'r') if l[0] != '#']    #list of shapefile to analyze
+	nlst_id_shpfiles = len(lst_id_shpfiles)			       # size of list of shapefiles
+	print lst_id_shpfiles
+#######
+	#try to open/ create csv file
+	try:
+           csvfile = open(csv_out_path, 'wb') 
+        except:
+           print "file could not be created/opened"
+    
+        # Check that the directory to receive the output files exists. If it doesn't, create it recursively
+        if not os.path.exists(dir_out):
+            try:
+                os.makedirs(dir_out)
+            except:
+                print 'The directory to receive the output files does not exist and cannot be created recursively'
+                quit()
+
+
+    
+        # Checking if start date is not greater than end date
+        if dateend < datestart:
+          print 'ERROR: the end date', dateend.strftime("%Y%m%d%H"), 'is earlier than the start date', datestart.strftime("%Y%m%d%H")
+          print 'Aborting'
+          quit()
+
+###################################
+
+        # Code to writing csv file headers starts here 
+	list_to_write_dates = []
+        for days in range(0,numdates):                          	# loop for number of days
+		print 'current file writing is', datecurr
+		temp_datecurr = datecurr.strftime('%Y/%m/%d/%H')  	#convert dateobject to string
+		print "\nstring print", temp_datecurr
+		list_to_write_dates.insert(days,temp_datecurr)     	#create list with header dates
+                datecurr += datetime.timedelta(hours=step)              #increment date by twelve hours
+        
+	list_to_write_dates.insert(0,'')				#to create gap to align headers properly
+	wr = csv.writer(csvfile, dialect='excel')
+	wr.writerow(list_to_write_dates)				#write list to first row
+        print list_to_write_dates
+	print("\nend of main function")
+	
+	datecurr=datestart						# reinitialize for next loop
+	list_write=[]							# row initalize for csv file 
+	print "apple"
+	#main printing out begins
+	for shpfile_count in range(0, nlst_id_shpfiles):                # loop for shapefile count
+	    datecurr=datestart 
+            for days in range(0,numdates):                           	# loop for number of days
+		input_files_path =os.path.join(dir_out,(lst_id_shpfiles[shpfile_count])[:2])                                                        # creating file path to be read from
+		file_names = "%04d%02d%02d%02d_%s.csv"%(datecurr.year, datecurr.month, datecurr.day, datecurr.hour, lst_id_shpfiles[shpfile_count]) # creating the file name to be read from
+		full_input_file_path =os.path.join(input_files_path,file_names)									    # creating entire input file path
+		infile= open(full_input_file_path, 'rb')											    # open file
+		infile_read=csv.reader(infile)													
+	        list_row = list(infile_read)													    # make file into a list object
+		print "sachin", list_row												            
+		list_write.insert(days,list_row[1][5]) 												    # take runoff values
+		infile.close()
+                datecurr += datetime.timedelta(hours=step)               #increment date by twelve hours
+		 
+	    list_write.insert(0,lst_id_shpfiles[shpfile_count])		 #to have shapefile first in row
+	    wr.writerow(list_write)			 		 #write list to first row
+	    list_write=[]	
+        csvfile.close()
+        return None
+
+########### User Defined  Methods ###################################################
+
+
+############################################ End of User Defined Methods  #######################################################
+
+if __name__ == '__main__':
+    if len(sys.argv) < 6:
+        msg = "".join(("You need at least 5 arguments here and provided: {}\n\n",
+                       "Correct usage is : {} datestr_str dateend_str station_list dir_out\n\n",
+                       "        datestr_str : start date for the verification yyyymmdd\n",
+                       "        dateend_str : end date for the verification yyyymmdd\n",
+                       "            STATION_SHAPEFILES_LIST : path of directory to receive the shapefiles analyzed\n",
+                       "            DIR_OUT : path of directory to receive the generated image\n",
+                       "            step : amount to increment date by\n",
+                       ))
+        raise TypeError(msg.format(len(sys.argv)-1, sys.argv[0]))
+twodarraysorter().sort(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5])
+
+######################################################################
+
+  
+
