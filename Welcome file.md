@@ -142,7 +142,7 @@ Defines a metric that needs to be tracked during the scenario.
 
 Use preset `traffic_light.xml`.
 
-Origin point, used as a reference point to translate all coordinates into the simulation tool coordinate system.
+Traffic light represented as a stationary element  and is part of the road network
 
 - **Name** (`name`): The name given to this spawn location.
 - **Orientation** (`orientation`): The heading that the ego should be spawned at, in degrees clockwise from East.
@@ -151,7 +151,7 @@ Origin point, used as a reference point to translate all coordinates into the si
 
 Use preset `location.xml`.
 
-Named location, used as a reference point for other elements within a scenario. For example, an area where a pedestrian will be placed.
+location point, which is used as a reference point for other elements within a scenario. For example, an area where a pedestrian will be placed.
 
 - **Name** (`name`): The name given to this spawn location.
 - **Orientation** (`orientation`): The heading that the ego should be spawned at, in degrees clockwise from East.
@@ -275,6 +275,6 @@ as if they were in a single file to run in the simulation.
 **Note:** The `dynamicinteractionlevels` and `staticreactionlevels` tags on `vehicle`, `pedestrian`, and `staticobject` nodes are _optional_ in the `osm` files `dynamic_objects/scenarioX.osm` and `static_objects/scenarioY.osm`. If, however, they are included and they _contradict_ the inferred difficulty level from the file name (e.g., a `staticobject` node with `staticreactionlevels == 1` is in `static_objects/scenario4.osm`), it will _not_ be loaded when the simulator is run with a static reaction level of 4, regardless of the fact that they are in the appropriate difficulty `osm` file.
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE3MTIxMTEzMjksLTg3OTUzMDM0MiwxMT
-Y1NDIyODg2LDYzMTE0MTg3MSwtMTc3NjIyMzc5M119
+eyJoaXN0b3J5IjpbLTE3MTYwMjYyMywtODc5NTMwMzQyLDExNj
+U0MjI4ODYsNjMxMTQxODcxLC0xNzc2MjIzNzkzXX0=
 -->
