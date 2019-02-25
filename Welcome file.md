@@ -215,6 +215,15 @@ If after parsing all ranges, none of them were valid format, the parser will def
 
 **Note:** `"3..3"` is valid, and will simply be parsed as `3`. `"..0"` and `"5.."` are also valid.
 
+### Location
+
+Use preset `location.xml`.
+
+location point, which is used as a reference point for other elements within a scenario. For example, an area where a pedestrian will be placed.
+
+- **Name** (`name`): The name given to this spawn location.
+- **Orientation** (`orientation`): The heading that the ego should be spawned at, in degrees clockwise from East.
+
 ## Difficulty Levels
 
 The **Static Reaction** and **Dynamic Interaction** levels mentioned above are **difficulty levels**. Scenarios can be launched with different difficulty levels, corresponding to how "hard" the scenario is for the autonomous vehicle to navigate. Difficulty levels can be specifed along multiple _axes_, corresponding to different _types_ of difficulty.
@@ -275,6 +284,6 @@ as if they were in a single file to run in the simulation.
 **Note:** The `dynamicinteractionlevels` and `staticreactionlevels` tags on `vehicle`, `pedestrian`, and `staticobject` nodes are _optional_ in the `osm` files `dynamic_objects/scenarioX.osm` and `static_objects/scenarioY.osm`. If, however, they are included and they _contradict_ the inferred difficulty level from the file name (e.g., a `staticobject` node with `staticreactionlevels == 1` is in `static_objects/scenario4.osm`), it will _not_ be loaded when the simulator is run with a static reaction level of 4, regardless of the fact that they are in the appropriate difficulty `osm` file.
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE3MTYwMjYyMywtODc5NTMwMzQyLDExNj
-U0MjI4ODYsNjMxMTQxODcxLC0xNzc2MjIzNzkzXX0=
+eyJoaXN0b3J5IjpbLTE0MTgxNzQ3MTIsLTg3OTUzMDM0MiwxMT
+Y1NDIyODg2LDYzMTE0MTg3MSwtMTc3NjIyMzc5M119
 -->
