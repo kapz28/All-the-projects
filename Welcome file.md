@@ -122,7 +122,7 @@ Use preset `velocity_params.xml`.
 
 ### Origin point
 
-Use preset `ego_start.xml`.
+Use preset `origin.xml`.
 
 Indicates the spawn location of the ego. Only one of these should exist per scenario. The ego will be spawned at the location of the first one, with the provided rotation.
 
@@ -130,8 +130,6 @@ Indicates the spawn location of the ego. Only one of these should exist per scen
 - **Orientation** (`orientation`): The heading that the ego should be spawned at, in degrees clockwise from East.
 - **Speed**: _Currently not implemented_
 - **Path ID**: _Currently not implemented_
-
-### Ego Goal
 
 ### Spawn
 
@@ -252,6 +250,6 @@ as if they were in a single file to run in the simulation.
 **Note:** The `dynamicinteractionlevels` and `staticreactionlevels` tags on `vehicle`, `pedestrian`, and `staticobject` nodes are _optional_ in the `osm` files `dynamic_objects/scenarioX.osm` and `static_objects/scenarioY.osm`. If, however, they are included and they _contradict_ the inferred difficulty level from the file name (e.g., a `staticobject` node with `staticreactionlevels == 1` is in `static_objects/scenario4.osm`), it will _not_ be loaded when the simulator is run with a static reaction level of 4, regardless of the fact that they are in the appropriate difficulty `osm` file.
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNzMwOTIwMTU3LC04Nzk1MzAzNDIsMTE2NT
-QyMjg4Niw2MzExNDE4NzEsLTE3NzYyMjM3OTNdfQ==
+eyJoaXN0b3J5IjpbLTQxNTg2MDQ4NiwtODc5NTMwMzQyLDExNj
+U0MjI4ODYsNjMxMTQxODcxLC0xNzc2MjIzNzkzXX0=
 -->
