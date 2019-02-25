@@ -11,7 +11,7 @@ A _node_ is a single LLA point. GeoScenario defines the following presets for no
 
 Global configurations for a scenario. Defines a name for a scenario, the road network (lanelet), and global failure conditions (timeout or collision).
 
-- **Version** (`version`): The name given to this spawn location.
+- **Version** (`version`): will indicate the GeoScenario version of the file 
 - **Orientation** (`orientation`): The heading that the ego should be spawned at, in degrees clockwise from East.
 - **Speed**: _Currently not implemented_
 - **Path ID**: _Currently not implemented_
@@ -242,6 +242,6 @@ as if they were in a single file to run in the simulation.
 **Note:** The `dynamicinteractionlevels` and `staticreactionlevels` tags on `vehicle`, `pedestrian`, and `staticobject` nodes are _optional_ in the `osm` files `dynamic_objects/scenarioX.osm` and `static_objects/scenarioY.osm`. If, however, they are included and they _contradict_ the inferred difficulty level from the file name (e.g., a `staticobject` node with `staticreactionlevels == 1` is in `static_objects/scenario4.osm`), it will _not_ be loaded when the simulator is run with a static reaction level of 4, regardless of the fact that they are in the appropriate difficulty `osm` file.
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTcxNzI1MjIxNSw2MzExNDE4NzEsLTE3Nz
-YyMjM3OTNdfQ==
+eyJoaXN0b3J5IjpbLTE3MzY4ODUwMTQsNjMxMTQxODcxLC0xNz
+c2MjIzNzkzXX0=
 -->
