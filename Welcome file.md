@@ -14,7 +14,7 @@ Global configurations for a scenario. Defines a name for a scenario, the road ne
 - **Version** (`version`): will indicate the GeoScenario version of the file 
  - **Name** (`name`): The name given to this scenario.
 - **Lanelet** (`lanelet`): Lanelet file which represents the Road Network
-- **Na** (`name`): The name given to this spawn location.
+- **Collision** (`collision`): `yes` Scenario will fail when a collision happens with Ego if the vehicle should treat its assigned path as a closed loop. If `false`, 
 - **Orientation** (`orientation`): The heading that the ego should be spawned at, in degrees clockwise from East.
 - **Speed**: _Currently not implemented_
 - **Path ID**: _Currently not implemented_
@@ -241,6 +241,6 @@ as if they were in a single file to run in the simulation.
 **Note:** The `dynamicinteractionlevels` and `staticreactionlevels` tags on `vehicle`, `pedestrian`, and `staticobject` nodes are _optional_ in the `osm` files `dynamic_objects/scenarioX.osm` and `static_objects/scenarioY.osm`. If, however, they are included and they _contradict_ the inferred difficulty level from the file name (e.g., a `staticobject` node with `staticreactionlevels == 1` is in `static_objects/scenario4.osm`), it will _not_ be loaded when the simulator is run with a static reaction level of 4, regardless of the fact that they are in the appropriate difficulty `osm` file.
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE4Mjk3MTM3MzksNjMxMTQxODcxLC0xNz
-c2MjIzNzkzXX0=
+eyJoaXN0b3J5IjpbNTY0MDE3NjkwLDYzMTE0MTg3MSwtMTc3Nj
+IyMzc5M119
 -->
