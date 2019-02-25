@@ -37,7 +37,7 @@ Indicates that a scenario vehicle should be spawned at the provided node.
 
 - **Name** (`name`): The name assigned to this vehicle.
 - **Dynamic Interaction Levels** (`dynamicinteractionlevels`): The Dynamic Interaction levels at which this vehicle will spawn. The provided value for this field must be a "list of ranges". The format for a list of ranges is indicated below.
-- **Rotation** (`rotation`): The heading that the vehicle should be spawned at, in degrees clockwise from East.
+- **Orientation** (`orientation`): The heading that the vehicle should be spawned at, in degrees clockwise from East.
 - **Speed** (`speed`): The default speed that this vehicle will drive at, in km/h.
 - **Use Speed Profile** (`usespeedprofile`): `true` if this vehicle should follow the speed profile of its specified path; `false` if it should drive at a constant default speed.
 - **Path ID** (`path`): The name of the path that this vehicle is assigned to.
@@ -45,7 +45,6 @@ Indicates that a scenario vehicle should be spawned at the provided node.
 - **Cycle Limit** (`cyclelimit`): The maximum number of times that a vehicle will complete its full path. If set to -1, the vehicle will repeat its path forever.
 - **Loop** (`loop`): `true` if the vehicle should treat its assigned path as a closed loop. If `false`, the vehicle will teleport back to the first point once it reaches the last point, assuming that it has not yet reached its cycle limit. If `true`, the vehicle will drive from the last point back to the first point instead.
 - **Driver**: _Currently not implemented_
-- 
 
 ### Pedestrian
 
@@ -55,7 +54,7 @@ Indicates that a scenario pedestrian should be spawned at the provided node.
 
 - **Name** (`name`): The name assigned to this pedestrian.
 - **Dynamic Interaction Levels** (`dynamicinteractionlevels`): The Dynamic Interaction levels at which this pedestrian will spawn. The provided value for this field must be a "list of ranges". The format for a list of ranges is indicated below.
-- **Rotation** (`rotation`): The heading that the pedestrian should be spawned at, in degrees clockwise from East.
+- **Orientation** (`orientation`): The heading that the pedestrian should be spawned at, in degrees clockwise from East.
 - **Speed** (`speed`): The default speed that this pedestrian will drive at, in km/h.
 - **Use Speed Profile** (`usespeedprofile`): `true` if this pedestrian should follow the speed profile of its specified path; `false` if it should drive at a constant default speed.
 - **Path ID** (`path`): The name of the path that this pedestrian is assigned to.
@@ -230,6 +229,5 @@ as if they were in a single file to run in the simulation.
 **Note:** The `dynamicinteractionlevels` and `staticreactionlevels` tags on `vehicle`, `pedestrian`, and `staticobject` nodes are _optional_ in the `osm` files `dynamic_objects/scenarioX.osm` and `static_objects/scenarioY.osm`. If, however, they are included and they _contradict_ the inferred difficulty level from the file name (e.g., a `staticobject` node with `staticreactionlevels == 1` is in `static_objects/scenario4.osm`), it will _not_ be loaded when the simulator is run with a static reaction level of 4, regardless of the fact that they are in the appropriate difficulty `osm` file.
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEyNTU3MjYwMjgsLTE3NzYyMjM3OTNdfQ
-==
+eyJoaXN0b3J5IjpbNjMxMTQxODcxLC0xNzc2MjIzNzkzXX0=
 -->
