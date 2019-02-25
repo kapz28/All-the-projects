@@ -45,6 +45,7 @@ Indicates that a scenario vehicle should be spawned at the provided node.
 - **Cycle Limit** (`cyclelimit`): The maximum number of times that a vehicle will complete its full path. If set to -1, the vehicle will repeat its path forever.
 - **Loop** (`loop`): `true` if the vehicle should treat its assigned path as a closed loop. If `false`, the vehicle will teleport back to the first point once it reaches the last point, assuming that it has not yet reached its cycle limit. If `true`, the vehicle will drive from the last point back to the first point instead.
 - **Driver**: _Currently not implemented_
+- 
 
 ### Pedestrian
 
@@ -229,5 +230,6 @@ as if they were in a single file to run in the simulation.
 **Note:** The `dynamicinteractionlevels` and `staticreactionlevels` tags on `vehicle`, `pedestrian`, and `staticobject` nodes are _optional_ in the `osm` files `dynamic_objects/scenarioX.osm` and `static_objects/scenarioY.osm`. If, however, they are included and they _contradict_ the inferred difficulty level from the file name (e.g., a `staticobject` node with `staticreactionlevels == 1` is in `static_objects/scenario4.osm`), it will _not_ be loaded when the simulator is run with a static reaction level of 4, regardless of the fact that they are in the appropriate difficulty `osm` file.
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE3NzYyMjM3OTNdfQ==
+eyJoaXN0b3J5IjpbLTEyNTU3MjYwMjgsLTE3NzYyMjM3OTNdfQ
+==
 -->
