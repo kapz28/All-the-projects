@@ -91,7 +91,7 @@ Indicates that a static object should be spawned at the provided node.
 - **Pitch** (`pitch`): The rotation of the object along the pitch axis.
 - **Yaw** (`yaw`): The rotation of the object along the yaw axis.
 - **Simulate Physics** (`simulatephysics`): `"yes"` to indicate that the object should have simulated physics, and `"no"` if not. Static objects with simulated physics have gravity and rotational physics, allowing them to fall, roll, and interact with the environment. Static objects also interact and collide with each other.
-- **Area** (`area`): If `"yes"` this object will be interpreted as a polygon following the shape of the way forming an area. This is only true if the last and first nodes of the way are pointing to the same node., and `"no"` indicates the object boundaries for it's dimensions (maximum width and length). However, the object still keeps its natural shape. Note when object is defined as single node attribute is always `"no"`
+- **Area** (`area`): If `"yes"` this object will be interpreted as a polygon following the shape of the way forming an area. This is only true if the last and first nodes of the way are pointing to the same node., and `"no"` means the way indicates the object boundaries for it's dimensions (maximum width and length). However, the object still keeps its natural shape. Note when object is defined as single node attribute is always `"no"`
 - **Height** (`height`): The object's height in cm
 - **Orientation** (`orientation`): Object's orientation in degrees
 
@@ -240,6 +240,6 @@ as if they were in a single file to run in the simulation.
 **Note:** The `dynamicinteractionlevels` and `staticreactionlevels` tags on `vehicle`, `pedestrian`, and `staticobject` nodes are _optional_ in the `osm` files `dynamic_objects/scenarioX.osm` and `static_objects/scenarioY.osm`. If, however, they are included and they _contradict_ the inferred difficulty level from the file name (e.g., a `staticobject` node with `staticreactionlevels == 1` is in `static_objects/scenario4.osm`), it will _not_ be loaded when the simulator is run with a static reaction level of 4, regardless of the fact that they are in the appropriate difficulty `osm` file.
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTIwNTA5NzczMzIsMTE2NTQyMjg4Niw2Mz
-ExNDE4NzEsLTE3NzYyMjM3OTNdfQ==
+eyJoaXN0b3J5IjpbLTg3OTUzMDM0MiwxMTY1NDIyODg2LDYzMT
+E0MTg3MSwtMTc3NjIyMzc5M119
 -->
