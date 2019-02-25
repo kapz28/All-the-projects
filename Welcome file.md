@@ -15,9 +15,8 @@ Global configurations for a scenario. Defines a name for a scenario, the road ne
  - **Name** (`name`): The name given to this scenario.
 - **Lanelet** (`lanelet`): Lanelet file which represents the Road Network
 - **Collision** (`collision`): If `yes` scenario will fail when a collision happens with Ego .., If `no` scenario will not fail when a collision happens with Ego 
-- **Timeout** (`timeout`): The amount of seconds that will cause the scenario to fail if the Ego has not reached it's goal yet
-- **Speed**: _Currently not implemented_
-- **Path ID**: _Currently not implemented_
+- **Timeout** (`timeout`): The amount of seconds that will cause the scenario to fail, if the Ego has not reached it's goal yet within that time
+- **Metrics**(`metrics`): Metrics to be collected in this scenario Ex: _*"ttc_ego_v1, ttc_ego_v2"*_
 
 ### Ego Start
 
@@ -241,6 +240,6 @@ as if they were in a single file to run in the simulation.
 **Note:** The `dynamicinteractionlevels` and `staticreactionlevels` tags on `vehicle`, `pedestrian`, and `staticobject` nodes are _optional_ in the `osm` files `dynamic_objects/scenarioX.osm` and `static_objects/scenarioY.osm`. If, however, they are included and they _contradict_ the inferred difficulty level from the file name (e.g., a `staticobject` node with `staticreactionlevels == 1` is in `static_objects/scenario4.osm`), it will _not_ be loaded when the simulator is run with a static reaction level of 4, regardless of the fact that they are in the appropriate difficulty `osm` file.
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTYzNTI4NjIzMyw2MzExNDE4NzEsLTE3Nz
+eyJoaXN0b3J5IjpbMTE2NTQyMjg4Niw2MzExNDE4NzEsLTE3Nz
 YyMjM3OTNdfQ==
 -->
