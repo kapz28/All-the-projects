@@ -34,7 +34,7 @@ Indicates a goal point for the ego. Multiple goals can exist per scenario. At ru
 - **Name** (`name`): The name given to this goal point.
 - **Order** (`order`): Integer that can be used as an unordered goal which is represented by only a value of 0 or can be used as an ordered goal which can exclusively one of any value {1,2,3,4,5,..}. 
 
-Ordered goals are used when multiple goals must be reached in a certain order. Any unordered goal is interpreted as sufficient condition for termination of a scenario with success state. If order and unordered are available, a scenario suceeds if at least one unordered goal is reached, or all ordered goals are reached in the right order.
+Ordered goals are used when multiple goals must be reached in a certain order. Any unordered goal is interpreted as sufficient condition for termination of a scenario with success state. If order and unordered are available, a scenario succeeds if at least one unordered goal is reached, or all ordered goals are reached in the right order.
 
 ### Vehicle
 
@@ -263,7 +263,7 @@ as if they were in a single file to run in the simulation.
 **Note:** The `dynamicinteractionlevels` and `staticreactionlevels` tags on `vehicle`, `pedestrian`, and `staticobject` nodes are _optional_ in the `osm` files `dynamic_objects/scenarioX.osm` and `static_objects/scenarioY.osm`. If, however, they are included and they _contradict_ the inferred difficulty level from the file name (e.g., a `staticobject` node with `staticreactionlevels == 1` is in `static_objects/scenario4.osm`), it will _not_ be loaded when the simulator is run with a static reaction level of 4, regardless of the fact that they are in the appropriate difficulty `osm` file.
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjM2ODUxODg2LC0xMjE0NzMwNTgzLC04Nz
-k1MzAzNDIsMTE2NTQyMjg4Niw2MzExNDE4NzEsLTE3NzYyMjM3
-OTNdfQ==
+eyJoaXN0b3J5IjpbMTg1MDU2NTk1NywtMTIxNDczMDU4MywtOD
+c5NTMwMzQyLDExNjU0MjI4ODYsNjMxMTQxODcxLC0xNzc2MjIz
+NzkzXX0=
 -->
