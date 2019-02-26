@@ -48,7 +48,6 @@ Indicates that a scenario vehicle should be spawned at the provided node.
 - **Path ID** (`path`): The name of the path that this vehicle is assigned to.
 - **Start In Motion** (`startinmotion`): `true` if this vehicle should begin moving immediately when the scenario starts; `false` if it should remain stationary. This property will have no effect unless the vehicle has a path assigned.
 - **Cycle Limit** (`cyclelimit`): The maximum number of times that a vehicle will complete its full path. If set to -1, the vehicle will repeat its path forever.
-- **Loop** (`loop`): `true` if the vehicle should treat its assigned path as a closed loop. If `false`, the vehicle will teleport back to the first point once it reaches the last point, assuming that it has not yet reached its cycle limit. If `true`, the vehicle will drive from the last point back to the first point instead.
 - **Driver**: _Currently not implemented_
 
 ### Pedestrian
@@ -63,7 +62,6 @@ Indicates that a scenario pedestrian should be spawned at the provided node.
 - **Path ID** (`path`): The name of the path that this pedestrian is assigned to.
 - **Start In Motion** (`startinmotion`): `true` if this pedestrian should begin moving immediately when the scenario starts; `false` if it should remain stationary. This property will have no effect unless the pedestrian has a path assigned.
 - **Cycle Limit** (`cyclelimit`): The maximum number of times that a pedestrian will complete its full path. If set to -1, the pedestrian will repeat its path forever.
-- **Loop** (`loop`): `true` if the pedestrian should treat its assigned path as a closed loop. If `false`, the pedestrian will teleport back to the first point once it reaches the last point, assuming that it has not yet reached its cycle limit. If `true`, the pedestrian will drive from the last point back to the first point instead.
 
 ### Static Object
 
@@ -263,7 +261,8 @@ as if they were in a single file to run in the simulation.
 **Note:** The `dynamicinteractionlevels` and `staticreactionlevels` tags on `vehicle`, `pedestrian`, and `staticobject` nodes are _optional_ in the `osm` files `dynamic_objects/scenarioX.osm` and `static_objects/scenarioY.osm`. If, however, they are included and they _contradict_ the inferred difficulty level from the file name (e.g., a `staticobject` node with `staticreactionlevels == 1` is in `static_objects/scenario4.osm`), it will _not_ be loaded when the simulator is run with a static reaction level of 4, regardless of the fact that they are in the appropriate difficulty `osm` file.
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTg3OTg3MzAxMiwxNTQ1OTcwMzQ5LDE4NT
-A1NjU5NTcsLTEyMTQ3MzA1ODMsLTg3OTUzMDM0MiwxMTY1NDIy
-ODg2LDYzMTE0MTg3MSwtMTc3NjIyMzc5M119
+eyJoaXN0b3J5IjpbMTE0OTE4MTY5MywtODc5ODczMDEyLDE1ND
+U5NzAzNDksMTg1MDU2NTk1NywtMTIxNDczMDU4MywtODc5NTMw
+MzQyLDExNjU0MjI4ODYsNjMxMTQxODcxLC0xNzc2MjIzNzkzXX
+0=
 -->
