@@ -143,7 +143,8 @@ GeoScenario defines two presets for ways:
 
 ### Path
 
-Indicates that this way represents a path to be followed by a vehicle or pedestrian. A closed way that is when the first node and the last
+Indicates that this way represents a path to be followed by a vehicle or pedestrian. 
+A closed way indicates that the path is meant to be looped. 
 
 By default, a scenario agent will travel along a path at a constant speed.
 In order to specify a speed profile for an agent, that agent must have the **Use Speed Profile** (`usespeedprofile`) tag set to `true`, and be assigned to a path where every node has a nonzero `agentspeed` tag.
@@ -158,11 +159,6 @@ If you do not include the 2 acceleration tags, the agent's speed will vary with 
 
 - **Name** (`name`): The name assigned to this path.
 
-### Pedestrian Path
-
-Currently, there is no difference between a vehicle and pedestrian path.
-
-- **Name** (`name`): The name assigned to this path.
 
 #### List of Ranges Format
 
@@ -261,8 +257,8 @@ as if they were in a single file to run in the simulation.
 **Note:** The `dynamicinteractionlevels` and `staticreactionlevels` tags on `vehicle`, `pedestrian`, and `staticobject` nodes are _optional_ in the `osm` files `dynamic_objects/scenarioX.osm` and `static_objects/scenarioY.osm`. If, however, they are included and they _contradict_ the inferred difficulty level from the file name (e.g., a `staticobject` node with `staticreactionlevels == 1` is in `static_objects/scenario4.osm`), it will _not_ be loaded when the simulator is run with a static reaction level of 4, regardless of the fact that they are in the appropriate difficulty `osm` file.
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTQyODY1NjcsMTE0OTE4MTY5MywtODc5OD
-czMDEyLDE1NDU5NzAzNDksMTg1MDU2NTk1NywtMTIxNDczMDU4
-MywtODc5NTMwMzQyLDExNjU0MjI4ODYsNjMxMTQxODcxLC0xNz
-c2MjIzNzkzXX0=
+eyJoaXN0b3J5IjpbMTY2MDU2MjU2MywxMTQ5MTgxNjkzLC04Nz
+k4NzMwMTIsMTU0NTk3MDM0OSwxODUwNTY1OTU3LC0xMjE0NzMw
+NTgzLC04Nzk1MzAzNDIsMTE2NTQyMjg4Niw2MzExNDE4NzEsLT
+E3NzYyMjM3OTNdfQ==
 -->
