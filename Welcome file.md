@@ -20,8 +20,6 @@ Global configurations for a scenario. Defines a name for a scenario, the road ne
 
 ### Ego Start
 
-Use preset `ego_start.xml`.
-
 Indicates the spawn location of the ego. Only one of these should exist per scenario. The ego will be spawned at the location of the first one, with the provided rotation.
 
 - **Name** (`name`): The name given to this spawn location.
@@ -31,8 +29,6 @@ Indicates the spawn location of the ego. Only one of these should exist per scen
 
 ### Ego Goal
 
-Use preset `ego_goal.xml`.
-
 Indicates a goal point for the ego. Multiple goals can exist per scenario. At runtime, a trigger with radius 2 m will be spawned at the goal point, and will end the scenario as soon as the ego reaches it.
 
 - **Name** (`name`): The name given to this goal point.
@@ -41,8 +37,6 @@ Indicates a goal point for the ego. Multiple goals can exist per scenario. At ru
 Ordered goals are used when multiple goals must be reached in a certain order. Any unordered goal is interpreted as sufficient condition for termination of a scenario with success state. If order and unordered are available, a scenario must success if at least one unordered goal is reached, or all ordered goals are reached in the right order.
 
 ### Vehicle
-
-Use preset `vehicle.xml`.
 
 Indicates that a scenario vehicle should be spawned at the provided node.
 
@@ -59,8 +53,6 @@ Indicates that a scenario vehicle should be spawned at the provided node.
 
 ### Pedestrian
 
-Use preset `pedestrian.xml`.
-
 Indicates that a scenario pedestrian should be spawned at the provided node.
 
 - **Name** (`name`): The name assigned to this pedestrian.
@@ -74,8 +66,6 @@ Indicates that a scenario pedestrian should be spawned at the provided node.
 - **Loop** (`loop`): `true` if the pedestrian should treat its assigned path as a closed loop. If `false`, the pedestrian will teleport back to the first point once it reaches the last point, assuming that it has not yet reached its cycle limit. If `true`, the pedestrian will drive from the last point back to the first point instead.
 
 ### Static Object
-
-Use preset `static_object.xml`.
 
 Indicates that a static object should be spawned at the provided node.
 
@@ -97,8 +87,6 @@ Indicates that a static object should be spawned at the provided node.
 
 ### Scenario Trigger
 
-Use preset `trigger.xml`.
-
 Indicates that a scenario trigger should be spawned at the given node. A trigger may have one or more _actions_ assigned to it. Each of these actions will be carried out once, when the specified trigger conditions are met.
 
 - **Name** (`name`): The name assigned to this trigger.
@@ -114,15 +102,11 @@ Indicates that a scenario trigger should be spawned at the given node. A trigger
 
 The use of path nodes is explained in the next section "Ways"
 
-Use preset `velocity_params.xml`.
-
 - **Target speed of agent (km/h)** (`agentspeed`) - the velocity that the agent should have when it reaches this path node.
 - **Target acceleration of agent (g)** (`agentacceleration`) - the acceleration the agent should use to achieve the velocity at the next node.
 - **Time to reach target acceleration of agent (s)** (`timetoacceleration`) - the time in which an agent should reach the given acceleration. The acceleration is linearly increased from the agent's previous acceleration to the target one over this period of time.
 
 ### Origin point
-
-Use preset `origin.xml`.
 
 Origin point, used as a reference point to translate all coordinates into the simulation tool coordinate system.
 
@@ -131,8 +115,6 @@ Origin point, used as a reference point to translate all coordinates into the si
 
 ### Metric
 
-Use preset `metric.xml`.
-
 Defines a metric that needs to be tracked during the scenario.
 
 - **Name** (`name`): The name given to this spawn location.
@@ -140,16 +122,12 @@ Defines a metric that needs to be tracked during the scenario.
 
 ### Traffic Light
 
-Use preset `traffic_light.xml`.
-
 Traffic light represented as a stationary element  and is part of the road network
 
 - **Name** (`name`): The name given to this spawn location.
 - **Orientation** (`orientation`): The heading that the ego should be spawned at, in degrees clockwise from East.
 
 ### Location
-
-Use preset `location.xml`.
 
 location point, which is used as a reference point for other elements within a scenario. For example, an area where a pedestrian will be placed.
 
@@ -167,8 +145,6 @@ GeoScenario defines two presets for ways:
 
 ### Vehicle Path
 
-Use preset `vehicle_path.xml`.
-
 Indicates that this way represents a path to be followed by a vehicle. Although JOSM connects nodes in ways with straight lines, this path will be converted into a spline when parsed by Unreal.
 
 By default, a scenario agent will travel along a path at a constant speed.
@@ -185,8 +161,6 @@ If you do not include the 2 acceleration tags, the agent's speed will vary with 
 - **Name** (`name`): The name assigned to this path.
 
 ### Pedestrian Path
-
-Use preset `pedestrian_path.xml`.
 
 Currently, there is no difference between a vehicle and pedestrian path.
 
@@ -216,8 +190,6 @@ If after parsing all ranges, none of them were valid format, the parser will def
 **Note:** `"3..3"` is valid, and will simply be parsed as `3`. `"..0"` and `"5.."` are also valid.
 
 ### Location
-
-Use preset `location.xml`.
 
 location point, which is used as a reference point for other elements within a scenario. For example, an area where a pedestrian will be placed.
 
@@ -291,6 +263,7 @@ as if they were in a single file to run in the simulation.
 **Note:** The `dynamicinteractionlevels` and `staticreactionlevels` tags on `vehicle`, `pedestrian`, and `staticobject` nodes are _optional_ in the `osm` files `dynamic_objects/scenarioX.osm` and `static_objects/scenarioY.osm`. If, however, they are included and they _contradict_ the inferred difficulty level from the file name (e.g., a `staticobject` node with `staticreactionlevels == 1` is in `static_objects/scenario4.osm`), it will _not_ be loaded when the simulator is run with a static reaction level of 4, regardless of the fact that they are in the appropriate difficulty `osm` file.
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEyMTQ3MzA1ODMsLTg3OTUzMDM0MiwxMT
-Y1NDIyODg2LDYzMTE0MTg3MSwtMTc3NjIyMzc5M119
+eyJoaXN0b3J5IjpbLTE1NTMyODIyOTYsLTEyMTQ3MzA1ODMsLT
+g3OTUzMDM0MiwxMTY1NDIyODg2LDYzMTE0MTg3MSwtMTc3NjIy
+Mzc5M119
 -->
