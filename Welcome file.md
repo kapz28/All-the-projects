@@ -146,7 +146,9 @@ GeoScenario defines two presets for ways:
 Indicates that this way represents a path to be followed by a vehicle or pedestrian. 
 A closed way indicates that the path is meant to be looped. 
 
-A closed way is when the way's last and first node is the same node id
+A closed way is when the way's last and first node has the same node id, visually represented by the following diagram. 
+
+![](https://lh6.googleusercontent.com/SBa_3psJf1CU7Hq1s6iTwKBTFZDMZABhnLQ4Zsh0WIW5W4KmmI-IC5TrRf-a4fVAGGRhtp8oSS_bMQ1QMeuzkOGtFGk5m7vrcvwEcToH2KLusQYgLt_a8-ODi-fgRKFyIiezL0bE)
 
 By default, a scenario agent will travel along a path at a constant speed.
 In order to specify a speed profile for an agent, that agent must have the **Use Speed Profile** (`usespeedprofile`) tag set to `true`, and be assigned to a path where every node has a nonzero `agentspeed` tag.
@@ -259,7 +261,7 @@ as if they were in a single file to run in the simulation.
 **Note:** The `dynamicinteractionlevels` and `staticreactionlevels` tags on `vehicle`, `pedestrian`, and `staticobject` nodes are _optional_ in the `osm` files `dynamic_objects/scenarioX.osm` and `static_objects/scenarioY.osm`. If, however, they are included and they _contradict_ the inferred difficulty level from the file name (e.g., a `staticobject` node with `staticreactionlevels == 1` is in `static_objects/scenario4.osm`), it will _not_ be loaded when the simulator is run with a static reaction level of 4, regardless of the fact that they are in the appropriate difficulty `osm` file.
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTUzMDYyMzYyLDExNDkxODE2OTMsLTg3OT
+eyJoaXN0b3J5IjpbOTA3ODE0MDg4LDExNDkxODE2OTMsLTg3OT
 g3MzAxMiwxNTQ1OTcwMzQ5LDE4NTA1NjU5NTcsLTEyMTQ3MzA1
 ODMsLTg3OTUzMDM0MiwxMTY1NDIyODg2LDYzMTE0MTg3MSwtMT
 c3NjIyMzc5M119
